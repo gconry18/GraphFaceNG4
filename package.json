@@ -1,0 +1,21 @@
+{
+    "author": "garethc18@gmail.com",
+    "dependencies": {},
+    "keywords": [],
+    "name": "graphface-ng4",
+    "pebble": {
+        "displayName": "GraphFace NG4",
+        "enableMultiJS": true,
+        "messageKeys": [],
+        "projectType": "native",
+        "resources": {
+            "media": []
+        },
+        "sdkVersion": "3",
+        "uuid": "2e83bea6-559c-4048-9d91-4d659121e059",
+        "watchapp": {
+            "watchface": false
+        }
+    },
+    "version": "1.0.0"
+}
