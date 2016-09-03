@@ -1,21 +1,209 @@
 {
-    "author": "garethc18@gmail.com",
-    "dependencies": {},
+    "author": "GarethC",
+    "dependencies": {
+        "pebble-clay": "^1.0.1"
+    },
     "keywords": [],
-    "name": "graphface-ng4",
+    "name": "graphface",
     "pebble": {
-        "displayName": "GraphFace NG4",
+        "capabilities": [
+            "configurable"
+        ],
+        "displayName": "GraphFace",
         "enableMultiJS": true,
-        "messageKeys": [],
+        "messageKeys": [
+            "INVERT",
+            "BACKGROUND",
+            "DATE",
+            "GRAPHPERIOD"
+        ],
         "projectType": "native",
         "resources": {
-            "media": []
+            "media": [
+                {
+                    "file": "images/timering.png",
+                    "name": "IMAGE_TIMERING",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/time-colon.png",
+                    "name": "IMAGE_TIME_COLON",
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/time-9.png",
+                    "name": "IMAGE_TIME_9",
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/time-8.png",
+                    "name": "IMAGE_TIME_8",
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/time-7.png",
+                    "name": "IMAGE_TIME_7",
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/time-6.png",
+                    "name": "IMAGE_TIME_6",
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/time-5.png",
+                    "name": "IMAGE_TIME_5",
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/time-4.png",
+                    "name": "IMAGE_TIME_4",
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/time-3.png",
+                    "name": "IMAGE_TIME_3",
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/time-2.png",
+                    "name": "IMAGE_TIME_2",
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/time-1.png",
+                    "name": "IMAGE_TIME_1",
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/time-0.png",
+                    "name": "IMAGE_TIME_0",
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/ico.png",
+                    "menuIcon": true,
+                    "name": "IMAGE_ICO",
+                    "type": "png"
+                },
+                {
+                    "file": "images/disconnected.png",
+                    "name": "IMAGE_BT_DISCONNECTED",
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/date-dash.png",
+                    "name": "IMAGE_DATE_DASH",
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/date-9.png",
+                    "name": "IMAGE_DATE_9",
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/date-8.png",
+                    "name": "IMAGE_DATE_8",
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/date-7.png",
+                    "name": "IMAGE_DATE_7",
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/date-6.png",
+                    "name": "IMAGE_DATE_6",
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/date-5.png",
+                    "name": "IMAGE_DATE_5",
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/date-4.png",
+                    "name": "IMAGE_DATE_4",
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/date-3.png",
+                    "name": "IMAGE_DATE_3",
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/date-2.png",
+                    "name": "IMAGE_DATE_2",
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/date-1.png",
+                    "name": "IMAGE_DATE_1",
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/date-0.png",
+                    "name": "IMAGE_DATE_0",
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/charge.png",
+                    "name": "IMAGE_CHARGE",
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/SquareFace.png",
+                    "name": "IMAGE_SQUAREFACE_BACKGROUND",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "fonts/visitor2.ttf",
+                    "name": "FONT_VISITOR_NORMAL_12",
+                    "type": "font"
+                },
+                {
+                    "file": "fonts/visitor2.ttf",
+                    "name": "FONT_VISITOR_NORMAL_28",
+                    "type": "font"
+                },
+                {
+                    "file": "fonts/visitor2.ttf",
+                    "name": "FONT_VISITOR_NORMAL_42",
+                    "type": "font"
+                },
+                {
+                    "file": "fonts/Square.ttf",
+                    "name": "FONT_SQUARE_NORMAL_42",
+                    "type": "font"
+                },
+                {
+                    "file": "fonts/Square.ttf",
+                    "name": "FONT_SQUARE_NORMAL_28",
+                    "type": "font"
+                },
+                {
+                    "file": "fonts/Square.ttf",
+                    "name": "FONT_SQUARE_NORMAL_12",
+                    "type": "font"
+                },
+                {
+                    "file": "fonts/DS-DIGI.TTF",
+                    "name": "FONT_DSDIGI_NORMAL_14",
+                    "type": "font"
+                }
+            ]
         },
         "sdkVersion": "3",
-        "uuid": "2e83bea6-559c-4048-9d91-4d659121e059",
+        "targetPlatforms": [
+            "aplite",
+            "basalt"
+        ],
+        "uuid": "33e81ca4-c8f0-4596-bf32-7bd2b6ab6ef0",
         "watchapp": {
-            "watchface": false
+            "watchface": true
         }
     },
-    "version": "1.0.0"
+    "version": "0.8.0"
 }
