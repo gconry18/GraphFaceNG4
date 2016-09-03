@@ -160,7 +160,7 @@
                 },
                 {
                     "file": "fonts/visitor2.ttf",
-                    "name": "FONT_VISITOR_NORMAL_12",
+                    "name": "FONT_VISITOR_NORMAL_42",
                     "type": "font"
                 },
                 {
@@ -170,22 +170,19 @@
                 },
                 {
                     "file": "fonts/visitor2.ttf",
-                    "name": "FONT_VISITOR_NORMAL_42",
-                    "type": "font"
-                },
-                {
-                    "file": "fonts/Square.ttf",
-                    "name": "FONT_SQUARE_NORMAL_42",
+                    "name": "FONT_VISITOR_NORMAL_12",
                     "type": "font"
                 },
                 {
                     "file": "fonts/Square.ttf",
                     "name": "FONT_SQUARE_NORMAL_28",
+                    "targetPlatforms": null,
                     "type": "font"
                 },
                 {
                     "file": "fonts/Square.ttf",
                     "name": "FONT_SQUARE_NORMAL_12",
+                    "targetPlatforms": null,
                     "type": "font"
                 },
                 {

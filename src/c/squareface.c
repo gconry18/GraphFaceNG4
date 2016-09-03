@@ -1,5 +1,5 @@
 #include <pebble.h>
-#include <helpers.c>
+#include "helpers.c"
   
 static Window *s_main_window;
 
