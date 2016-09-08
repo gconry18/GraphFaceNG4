@@ -8,6 +8,7 @@ static Window *s_main_window;
 #define KEY_DATE 2
 #define KEY_GRAPHPERIOD 3
 #define KEY_RANDOM_COLOR_GRAPH 0
+#define KEY_GRAPH_COLOR 0xFFFFFF
 
 static TextLayer *s_timeperiod_layer;
 static TextLayer *s_day_layer;
@@ -97,6 +98,9 @@ static GBitmap *s_bt_bitmap;
 // GRAPH UPDATES
 static void update_graph() {
 	bool randomColors = persist_read_bool(KEY_RANDOM_COLOR_GRAPH);
+	uint32_t graphColor = persist_read_int(KEY_GRAPH_COLOR);
+	
+	//if (!randomColors) { APP_LOG(APP_LOG_LEVEL_DEBUG, "update_graph() - Color " + graphColor); }
 	
 	// Move Everything Up 1
 	int p = 41;
@@ -124,7 +128,7 @@ static void update_graph() {
 			.size = GSize(2,h)
 	    };
 	
-	GColor bar_color = PBL_IF_BW_ELSE(GColorBlack, randomColors ? random_color() : GColorBlack);
+	GColor bar_color = PBL_IF_BW_ELSE(GColorBlack, randomColors ? random_color() : graphColor ? GColorFromHEX(graphColor) : GColorBlack);
 	bitmap_layer_set_background_color(s_graph_layers[GRAPH_BARS-1], bar_color);
 	s_graph_colors[GRAPH_BARS-1] = bar_color;
 	
@@ -326,7 +330,7 @@ static void in_recv_handler(DictionaryIterator *iter, void *context)
 	
 	#if defined(PBL_COLOR)
 	Tuple *random_color_graph_t = dict_find(iter, MESSAGE_KEY_RANDOM_COLOR_GRAPH);
-	if(background_t)
+	if(random_color_graph_t)
 	{
 		if(random_color_graph_t->value->int32 == 1)
 		{
@@ -337,6 +341,22 @@ static void in_recv_handler(DictionaryIterator *iter, void *context)
 		{
 			persist_write_bool(KEY_RANDOM_COLOR_GRAPH, false);
 			APP_LOG(APP_LOG_LEVEL_DEBUG, "in_recv_handler() - No Random Colors");
+			
+			// Now we read the color set
+			Tuple *graph_color_t = dict_find(iter, MESSAGE_KEY_GRAPH_COLOR);
+			if(graph_color_t) {
+				uint32_t graphColor = graph_color_t->value->int32;
+				persist_write_int(KEY_GRAPH_COLOR, graphColor);
+				APP_LOG(APP_LOG_LEVEL_DEBUG, "in_recv_handler() - Graph Color set %ld", graphColor);
+
+				// Update all existing colors
+				int i;
+				for (i = 0; i < GRAPH_BARS; i++) {		
+					bitmap_layer_set_background_color(s_graph_layers[i], GColorFromHEX(graphColor));
+					s_graph_colors[i] = GColorFromHEX(graphColor);		
+				}
+			}
+			// End read color set
 		}
 	}
 	#endif
@@ -490,6 +510,7 @@ static void main_window_load (Window *window) {
 	
 	// TOP GRAPH
 	bool randomColors = persist_read_bool(KEY_RANDOM_COLOR_GRAPH);
+	uint32_t graphColor = persist_read_int(KEY_GRAPH_COLOR);
 	
 	s_graph_underline = bitmap_layer_create(GRect(41, 50, 62, 1));
 	bitmap_layer_set_background_color(s_graph_underline, GColorBlack);
@@ -503,7 +524,7 @@ static void main_window_load (Window *window) {
 		s_graph_layers[i] = bitmap_layer_create(GRect(p, 49-h, 2, h));
 		s_graph_heights[i] = h;
 				
-		GColor bar_color = PBL_IF_BW_ELSE(GColorBlack, randomColors ? random_color() : GColorBlack);
+		GColor bar_color = PBL_IF_BW_ELSE(GColorBlack, randomColors ? random_color() : graphColor ? GColorFromHEX(graphColor) : GColorBlack);
 		bitmap_layer_set_background_color(s_graph_layers[i], bar_color);
 		s_graph_colors[i] = bar_color;
 		
