@@ -15,7 +15,9 @@
             "INVERT",
             "BACKGROUND",
             "DATE",
-            "GRAPHPERIOD"
+            "GRAPHPERIOD",
+            "RANDOM_COLOR_GRAPH",
+            "GRAPH_COLOR"
         ],
         "projectType": "native",
         "resources": {

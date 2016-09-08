@@ -7,6 +7,7 @@ static Window *s_main_window;
 #define KEY_BACKGROUND 1
 #define KEY_DATE 2
 #define KEY_GRAPHPERIOD 3
+#define KEY_RANDOM_COLOR_GRAPH 0
 
 static TextLayer *s_timeperiod_layer;
 static TextLayer *s_day_layer;
@@ -29,6 +30,7 @@ static BitmapLayer *s_graph_underline;
 #define GRAPH_BARS 16
 static BitmapLayer *s_graph_layers[GRAPH_BARS];
 static int s_graph_heights[GRAPH_BARS];
+static GColor s_graph_colors[GRAPH_BARS];
 
 // TIME
 #define TOTAL_TIME_DIGITS 5
@@ -94,6 +96,8 @@ static GBitmap *s_bt_bitmap;
 
 // GRAPH UPDATES
 static void update_graph() {
+	bool randomColors = persist_read_bool(KEY_RANDOM_COLOR_GRAPH);
+	
 	// Move Everything Up 1
 	int p = 41;
 	int h;
@@ -106,6 +110,9 @@ static void update_graph() {
 			.size = GSize(2,h)
 	    };
 		layer_set_frame(bitmap_layer_get_layer(s_graph_layers[i]), frame1);
+		bitmap_layer_set_background_color(s_graph_layers[i], s_graph_colors[i+1]);
+		s_graph_colors[i] = s_graph_colors[i+1];
+		
 		p+=4;
     }
 	
@@ -116,7 +123,11 @@ static void update_graph() {
 			.origin = GPoint(p, 49-h),
 			.size = GSize(2,h)
 	    };
-	bitmap_layer_set_background_color(s_graph_layers[GRAPH_BARS-1], PBL_IF_BW_ELSE(GColorBlack, (GColor)random_color()));
+	
+	GColor bar_color = PBL_IF_BW_ELSE(GColorBlack, randomColors ? random_color() : GColorBlack);
+	bitmap_layer_set_background_color(s_graph_layers[GRAPH_BARS-1], bar_color);
+	s_graph_colors[GRAPH_BARS-1] = bar_color;
+	
 	layer_set_frame(bitmap_layer_get_layer(s_graph_layers[GRAPH_BARS-1]), frame);
 }
 //------------------------------------------------------------------------------//
@@ -312,6 +323,23 @@ static void in_recv_handler(DictionaryIterator *iter, void *context)
 			APP_LOG(APP_LOG_LEVEL_DEBUG, "in_recv_handler() - HideBack");
 		}
 	}
+	
+	#if defined(PBL_COLOR)
+	Tuple *random_color_graph_t = dict_find(iter, MESSAGE_KEY_RANDOM_COLOR_GRAPH);
+	if(background_t)
+	{
+		if(random_color_graph_t->value->int32 == 1)
+		{
+			persist_write_bool(KEY_RANDOM_COLOR_GRAPH, true);
+			APP_LOG(APP_LOG_LEVEL_DEBUG, "in_recv_handler() - Random Colors");
+		}
+		else if(random_color_graph_t->value->int32 == 0)
+		{
+			persist_write_bool(KEY_RANDOM_COLOR_GRAPH, false);
+			APP_LOG(APP_LOG_LEVEL_DEBUG, "in_recv_handler() - No Random Colors");
+		}
+	}
+	#endif
 
 	Tuple *date_format_t = dict_find(iter,  MESSAGE_KEY_DATE);
 	if (date_format_t)
@@ -461,6 +489,8 @@ static void main_window_load (Window *window) {
 	APP_LOG(APP_LOG_LEVEL_DEBUG, "main_window_load() - Dash Complete");
 	
 	// TOP GRAPH
+	bool randomColors = persist_read_bool(KEY_RANDOM_COLOR_GRAPH);
+	
 	s_graph_underline = bitmap_layer_create(GRect(41, 50, 62, 1));
 	bitmap_layer_set_background_color(s_graph_underline, GColorBlack);
 	layer_add_child(window_get_root_layer(window), bitmap_layer_get_layer(s_graph_underline));
@@ -472,7 +502,11 @@ static void main_window_load (Window *window) {
 	for (i = 0; i < GRAPH_BARS; i++) {
 		s_graph_layers[i] = bitmap_layer_create(GRect(p, 49-h, 2, h));
 		s_graph_heights[i] = h;
-		bitmap_layer_set_background_color(s_graph_layers[i], PBL_IF_BW_ELSE(GColorBlack, random_color()));
+				
+		GColor bar_color = PBL_IF_BW_ELSE(GColorBlack, randomColors ? random_color() : GColorBlack);
+		bitmap_layer_set_background_color(s_graph_layers[i], bar_color);
+		s_graph_colors[i] = bar_color;
+		
 		layer_add_child(window_get_root_layer(window), bitmap_layer_get_layer(s_graph_layers[i]));
 		p+=4;
 		h = (rand()+(i)) % 39;

@@ -25,6 +25,19 @@ module.exports = [
         "messageKey": "BACKGROUND",
         "defaultValue": true,
         "label": "Show time ring"
+      },
+      {
+        "type": "color",
+        "messageKey": "GRAPH_COLOR",
+        "defaultValue": "0xFFFFFF",
+        "label": "Graph Bar Color"
+      },
+	  {
+        "type": "toggle",
+        "messageKey": "RANDOM_COLOR_GRAPH",
+        "defaultValue": false,
+		"capabilities": ["COLOR"],
+        "label": "Random Color Graph Bars (Ignores set color)"
       }
     ]
   },
